@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+  namespace: default
+  labels:
+    run: example
+spec:
+  containers:
+    - name: example
+      image: nginx
+  volumes:
+    - name: kube-api-access-zckb9
+      projected:
+        sources:
+          - configMap:
+              name: kube-root-ca.crt
+              optional: false
+  nodeName: aks-agentpool-68326946-vmss000004
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  phase: Running
+  podIP: 10.244.1.2
+  startTime: "2023-09-05T06:52:00Z"
+  containerStatuses:
+    - name: example
+      containerID: containerd://77b54008497ffb93814b29bb496c17db926b320859ce55bf640262d9f824a8fa
+      image: nginx
+      imageID: docker.io/library/nginx@sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+      ready: true
+      restartCount: 0
+      state:
+        running:
+          startedAt: "2023-09-05T06:52:09Z"
+  qosClass: BestEffort
