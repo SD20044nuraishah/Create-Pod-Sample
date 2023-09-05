@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: example
-  namespace: default
+  name: PodExample
+  namespace: testing
   labels:
-    run: example
+    run: podexample
 spec:
   containers:
     - name: example
