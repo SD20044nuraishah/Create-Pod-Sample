@@ -1,0 +1,25 @@
+#login and connect tu azure
+az login
+
+#check registration status
+az provider show -n Microsoft.OperationsManagement -o table
+az provider show -n Microsoft.OperationalInsights -o table
+
+#CREATE RESOURCE GROUP
+az group create --name myResourceGroup --location eastus
+
+#CREATE AKS CLUSTER
+az aks create -g myResourceGroup -n myAKSCluster --enable-managed-identity --node-count 1 --enable-addons monitoring --generate-ssh-keys
+
+#CONNECT TO CLUSTER
+kubectl get nodes
+
+#DEPLOY APPLICATION
+kubectl apply -f azure-vote.yaml
+
+#TEST APPLICATION
+kubectl get service azure-vote-front --watch
+#By copying external IP, open a web browser and paste the IP
+
+#DELETE CLUSTER
+az group delete --name myResourceGroup --yes --no-wait
